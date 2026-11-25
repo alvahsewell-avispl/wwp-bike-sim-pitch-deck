@@ -1,0 +1,958 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="description" content="Pitch deck for a reimagined Wounded Warrior Project handcycle exhibit." />
+  <title>Forward — Reimagining the Handcycle Experience</title>
+  <style>
+    :root {
+      --navy-950: #030b18;
+      --navy-900: #071326;
+      --navy-800: #0d213d;
+      --blue: #1674d1;
+      --blue-soft: #6cb7ff;
+      --red: #ee3546;
+      --red-deep: #b81328;
+      --cream: #f3efe7;
+      --white: #ffffff;
+      --muted: #9fb0c5;
+      --line: rgba(255,255,255,.15);
+      --shadow: 0 30px 80px rgba(0,0,0,.38);
+      --display: "Arial Narrow", "Aptos Display", "Franklin Gothic Medium", sans-serif;
+      --body: Inter, Aptos, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; background: var(--navy-950); }
+    body {
+      margin: 0;
+      color: var(--white);
+      background:
+        radial-gradient(circle at 80% 0%, rgba(22,116,209,.17), transparent 34%),
+        var(--navy-950);
+      font-family: var(--body);
+      overflow: hidden;
+    }
+
+    button, a { font: inherit; }
+    button { color: inherit; }
+    img { display: block; max-width: 100%; }
+
+    .deck {
+      height: 100svh;
+      overflow-y: auto;
+      scroll-snap-type: y mandatory;
+      scrollbar-width: none;
+    }
+    .deck::-webkit-scrollbar { display: none; }
+
+    .slide {
+      position: relative;
+      min-height: 100svh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      overflow: hidden;
+      display: grid;
+      align-items: center;
+      isolation: isolate;
+      padding: clamp(72px, 8vw, 120px) clamp(28px, 8vw, 140px);
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: linear-gradient(to right, rgba(0,0,0,.7), transparent 70%);
+      pointer-events: none;
+    }
+
+    .slide--image { padding: 0; }
+    .slide--light { color: var(--navy-950); background: var(--cream); }
+    .slide--light::before { opacity: .16; }
+    .slide--red { background: linear-gradient(135deg, #a30e23 0%, var(--red) 58%, #ff6371 100%); }
+
+    .chrome {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      pointer-events: none;
+    }
+    .brand {
+      position: absolute;
+      left: 28px;
+      top: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font: 800 12px/1 var(--display);
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .brand-mark {
+      width: 29px;
+      height: 29px;
+      border: 2px solid var(--white);
+      border-radius: 50%;
+      position: relative;
+    }
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      width: 11px;
+      height: 2px;
+      background: var(--red);
+      right: -7px;
+      top: 12px;
+    }
+    .counter {
+      position: absolute;
+      top: 28px;
+      right: 30px;
+      font: 800 12px/1 var(--display);
+      letter-spacing: .14em;
+    }
+    .progress {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 3px;
+      background: rgba(255,255,255,.12);
+    }
+    .progress > span {
+      display: block;
+      height: 100%;
+      width: 11.111%;
+      background: var(--red);
+      box-shadow: 0 0 18px rgba(238,53,70,.8);
+      transition: width .35s ease;
+    }
+    .controls {
+      position: absolute;
+      right: 22px;
+      bottom: 22px;
+      display: flex;
+      gap: 8px;
+      pointer-events: auto;
+    }
+    .control {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,255,255,.24);
+      background: rgba(3,11,24,.72);
+      backdrop-filter: blur(12px);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform .2s ease, background .2s ease;
+    }
+    .control:hover { transform: translateY(-2px); background: var(--red); }
+    .hint {
+      position: absolute;
+      left: 28px;
+      bottom: 29px;
+      color: rgba(255,255,255,.65);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--blue-soft);
+      font: 800 12px/1 var(--display);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+    .eyebrow::before { content: ""; width: 36px; height: 3px; background: var(--red); }
+    .slide--light .eyebrow { color: var(--blue); }
+
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { font-family: var(--display); text-transform: uppercase; }
+    h1 {
+      max-width: 980px;
+      font-size: clamp(60px, 9.7vw, 156px);
+      line-height: .82;
+      letter-spacing: -.055em;
+      margin-bottom: 28px;
+    }
+    h2 {
+      max-width: 940px;
+      font-size: clamp(46px, 6.2vw, 96px);
+      line-height: .92;
+      letter-spacing: -.045em;
+      margin-bottom: 28px;
+    }
+    h3 {
+      font-size: clamp(20px, 2vw, 30px);
+      line-height: 1;
+      letter-spacing: -.02em;
+      margin-bottom: 10px;
+    }
+    .lede {
+      max-width: 760px;
+      font-size: clamp(19px, 2vw, 30px);
+      line-height: 1.35;
+      color: #d6e0ec;
+    }
+    .slide--light .lede { color: #34465a; }
+    .small { font-size: 13px; line-height: 1.55; color: var(--muted); }
+    .accent { color: var(--red); }
+    .blue { color: var(--blue-soft); }
+    .kicker {
+      font: 900 clamp(18px, 2vw, 28px)/1 var(--display);
+      letter-spacing: .02em;
+      text-transform: uppercase;
+    }
+
+    .hero-bg, .full-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -3;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(3,11,24,.96) 0%, rgba(3,11,24,.75) 40%, rgba(3,11,24,.12) 73%),
+        linear-gradient(0deg, rgba(3,11,24,.7), transparent 45%);
+    }
+    .hero-copy { align-self: end; padding-bottom: 7vh; }
+    .hero-copy h1 span { display: block; color: var(--red); }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px 34px;
+      align-items: center;
+      margin-top: 32px;
+      color: rgba(255,255,255,.74);
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .image-caption {
+      position: absolute;
+      left: clamp(24px, 5vw, 74px);
+      bottom: clamp(24px, 5vw, 64px);
+      width: min(660px, 72vw);
+      padding: 24px 26px;
+      background: rgba(3,11,24,.8);
+      border-left: 4px solid var(--red);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+    .image-caption h2 { font-size: clamp(34px, 5vw, 68px); margin-bottom: 10px; }
+    .image-caption p { margin-bottom: 0; color: #d8e2ee; line-height: 1.45; }
+    .render-label {
+      position: absolute;
+      right: clamp(24px, 5vw, 74px);
+      top: clamp(70px, 8vw, 98px);
+      padding: 9px 12px;
+      background: var(--red);
+      font: 800 10px/1 var(--display);
+      letter-spacing: .17em;
+      text-transform: uppercase;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+      gap: clamp(38px, 6vw, 100px);
+      align-items: center;
+      width: 100%;
+      max-width: 1540px;
+      margin: 0 auto;
+    }
+    .photo-frame {
+      position: relative;
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      min-height: min(66vh, 700px);
+    }
+    .photo-frame img { width: 100%; height: 100%; object-fit: cover; position: absolute; inset: 0; }
+    .photo-frame::after {
+      content: "EXISTING EXHIBIT";
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      padding: 8px 10px;
+      color: var(--white);
+      background: rgba(3,11,24,.8);
+      font: 800 10px/1 var(--display);
+      letter-spacing: .16em;
+    }
+
+    .stack { display: grid; gap: 18px; }
+    .statement {
+      border-top: 1px solid var(--line);
+      padding-top: 20px;
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 18px;
+    }
+    .statement b {
+      font: 900 28px/1 var(--display);
+      color: var(--red);
+    }
+    .statement p { margin: 0; line-height: 1.5; color: #c6d2df; }
+    .slide--light .statement { border-color: rgba(3,11,24,.16); }
+    .slide--light .statement p { color: #34465a; }
+
+    .big-quote {
+      width: min(1260px, 100%);
+      margin: auto;
+    }
+    .big-quote blockquote {
+      margin: 0;
+      font: 800 clamp(42px, 6.3vw, 96px)/.98 var(--display);
+      letter-spacing: -.035em;
+      text-transform: uppercase;
+    }
+    .quote-mark { color: var(--red); }
+    .big-quote blockquote { font-size: clamp(42px,5.25vw,84px); }
+    .big-quote .attribution {
+      margin-top: 30px;
+      color: var(--muted);
+      font-size: 13px;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .journey {
+      width: min(1500px, 100%);
+      margin: 0 auto;
+    }
+    .journey-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      margin-top: 64px;
+      counter-reset: step;
+    }
+    .journey-step {
+      position: relative;
+      min-height: 250px;
+      padding: 68px 24px 24px;
+      border-top: 1px solid rgba(255,255,255,.26);
+      counter-increment: step;
+    }
+    .journey-step::before {
+      content: "0" counter(step);
+      position: absolute;
+      top: -19px;
+      left: 0;
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      background: var(--red);
+      border-radius: 50%;
+      font: 900 12px/1 var(--display);
+    }
+    .journey-step::after {
+      content: "";
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      width: 9px;
+      height: 9px;
+      background: var(--blue-soft);
+      border-radius: 50%;
+    }
+    .journey-step:last-child::after { display: none; }
+    .journey-step p { color: #b8c7d6; line-height: 1.55; font-size: 14px; }
+
+    .system-grid {
+      width: min(1500px, 100%);
+      display: grid;
+      grid-template-columns: .85fr 1.3fr .85fr;
+      gap: 32px;
+      align-items: stretch;
+      margin: 32px auto 0;
+    }
+    .signal-col { display: grid; gap: 14px; }
+    .signal {
+      position: relative;
+      padding: 20px;
+      min-height: 108px;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.045);
+    }
+    .signal::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 34px;
+      height: 1px;
+      background: var(--red);
+    }
+    .signal-col:first-child .signal::after { right: -34px; }
+    .signal-col:last-child .signal::after { left: -34px; }
+    .signal span {
+      display: block;
+      color: var(--blue-soft);
+      font: 800 10px/1 var(--display);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .signal p { margin: 0; font-size: 13px; line-height: 1.4; color: #d1dbe6; }
+    .core {
+      display: grid;
+      place-items: center;
+      min-height: 430px;
+      padding: 45px;
+      text-align: center;
+      background:
+        radial-gradient(circle, rgba(22,116,209,.33), transparent 58%),
+        rgba(255,255,255,.035);
+      border: 1px solid rgba(108,183,255,.35);
+      position: relative;
+    }
+    .core::before, .core::after {
+      content: "";
+      position: absolute;
+      border: 1px solid rgba(108,183,255,.25);
+      border-radius: 50%;
+      inset: 14%;
+      animation: pulse 3s ease-in-out infinite;
+    }
+    .core::after { inset: 26%; animation-delay: 1s; }
+    @keyframes pulse { 50% { opacity: .25; transform: scale(1.08); } }
+    .core strong { font: 900 clamp(34px, 4vw, 62px)/.9 var(--display); text-transform: uppercase; position: relative; z-index: 1; }
+    .core small { display: block; margin-top: 16px; color: var(--muted); font-size: 13px; line-height: 1.5; position: relative; z-index: 1; }
+
+    .story-grid {
+      width: min(1480px, 100%);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin: 52px auto 0;
+    }
+    .story-card {
+      position: relative;
+      min-height: 360px;
+      padding: 34px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background: var(--navy-900);
+      border-top: 5px solid var(--red);
+      overflow: hidden;
+    }
+    .story-card::before {
+      content: attr(data-num);
+      position: absolute;
+      right: -8px;
+      top: -35px;
+      color: rgba(255,255,255,.05);
+      font: 900 170px/1 var(--display);
+    }
+    .story-card p { color: #b8c7d6; line-height: 1.55; margin-bottom: 0; }
+    .story-card .tag { color: var(--blue-soft); font: 800 10px/1 var(--display); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 18px; }
+
+    .architecture {
+      width: min(1480px, 100%);
+      display: grid;
+      grid-template-columns: 1fr 90px 1fr 90px 1fr;
+      align-items: center;
+      gap: 10px;
+      margin: 56px auto 0;
+    }
+    .arch-box {
+      min-height: 270px;
+      padding: 28px;
+      color: var(--navy-950);
+      background: var(--white);
+      box-shadow: 0 20px 50px rgba(0,0,0,.12);
+    }
+    .arch-box.dark { color: var(--white); background: var(--navy-900); }
+    .arch-box.red { color: var(--white); background: var(--red); }
+    .arch-box ul { padding-left: 18px; margin: 24px 0 0; }
+    .arch-box li { margin: 10px 0; line-height: 1.4; font-size: 14px; }
+    .arrow { text-align: center; color: var(--red); font-size: 42px; font-weight: 900; }
+    .principle-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 34px;
+    }
+    .pill {
+      padding: 10px 14px;
+      border: 1px solid rgba(3,11,24,.18);
+      border-radius: 99px;
+      color: #34465a;
+      font-size: 12px;
+    }
+
+    .access-grid {
+      width: min(1480px, 100%);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 42px;
+    }
+    .access-card {
+      padding: 28px;
+      min-height: 200px;
+      border: 1px solid rgba(255,255,255,.15);
+      background: linear-gradient(145deg, rgba(255,255,255,.065), rgba(255,255,255,.018));
+    }
+    .access-card .icon { font-size: 32px; color: var(--red); margin-bottom: 24px; }
+    .access-card p { color: #bac7d6; line-height: 1.5; margin: 0; font-size: 14px; }
+
+    .roadmap {
+      width: min(1480px, 100%);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 50px;
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .phase { padding: 34px; min-height: 370px; border-right: 1px solid rgba(255,255,255,.18); }
+    .phase:last-child { border-right: 0; }
+    .phase-num { color: var(--red); font: 900 12px/1 var(--display); letter-spacing: .18em; text-transform: uppercase; }
+    .phase h3 { margin-top: 20px; }
+    .phase ul { padding-left: 18px; color: #becbd8; }
+    .phase li { margin: 14px 0; line-height: 1.45; }
+    .phase .outcome { margin-top: 28px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,.14); color: var(--blue-soft); font-weight: 700; }
+
+    .close-grid {
+      width: min(1480px, 100%);
+      display: grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 70px;
+      align-items: end;
+    }
+    .close-grid h2 { font-size: clamp(58px, 8.5vw, 136px); }
+    .closing-list { border-top: 1px solid rgba(255,255,255,.28); }
+    .closing-list div { padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,.16); display: flex; justify-content: space-between; gap: 20px; }
+    .closing-list span:first-child { color: var(--muted); }
+    .disclaimer {
+      position: absolute;
+      left: clamp(28px, 8vw, 140px);
+      right: clamp(28px, 8vw, 140px);
+      bottom: 24px;
+      color: rgba(255,255,255,.48);
+      font-size: 10px;
+      line-height: 1.45;
+    }
+
+    @media screen and (max-width: 900px) {
+      body { overflow: auto; }
+      .slide { min-height: 100svh; padding: 82px 24px 74px; }
+      .split, .close-grid { grid-template-columns: 1fr; gap: 30px; }
+      .photo-frame { min-height: 42vh; }
+      .journey-grid, .story-grid, .access-grid, .roadmap { grid-template-columns: 1fr; }
+      .journey-step { min-height: 170px; }
+      .journey-step::after { display: none; }
+      .system-grid { grid-template-columns: 1fr; }
+      .signal::after { display: none; }
+      .architecture { grid-template-columns: 1fr; }
+      .arrow { transform: rotate(90deg); }
+      .phase { border-right: 0; border-bottom: 1px solid rgba(255,255,255,.18); }
+      .phase:last-child { border-bottom: 0; }
+      .hint { display: none; }
+      .brand span:last-child { display: none; }
+      .image-caption { width: calc(100% - 48px); }
+    }
+
+    @media print {
+      body { overflow: visible; background: #000; }
+      .deck { height: auto; overflow: visible; }
+      .slide { page-break-after: always; min-height: 100vh; }
+      .chrome { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .core::before, .core::after { animation: none; }
+    }
+
+    /* V2 revisions: scoped to the changed slides. */
+    .revision-wrap { width: min(1500px,100%); margin: auto; }
+    .hardware-slide, .story-slide, .cms-slide, .scope-slide { padding: 86px 5vw 70px; }
+    .hardware-slide h2, .story-slide h2 { font-size: clamp(42px,4.6vw,74px); margin-bottom: 30px; }
+    .hardware-layout { display: grid; grid-template-columns: 1.65fr 1fr; gap: 36px; align-items: center; }
+    .hardware-figure, .ride-figure { position: relative; margin: 0; }
+    .hardware-figure img, .ride-figure img { width: 100%; height: auto; box-shadow: var(--shadow); }
+    .hardware-figure figcaption, .ride-figure figcaption { color: #c6d2df; font-size: 12px; line-height: 1.45; margin-top: 14px; }
+    .hardware-pin { position: absolute; width: 32px; height: 32px; display: grid; place-items: center; background: #b81328; color: #fff; border: 2px solid #fff; border-radius: 50%; font: 900 15px/1 var(--display); transform: translate(-50%,-50%); box-shadow: 0 2px 8px #0008; }
+    .hardware-notes { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
+    .hardware-notes li { display: grid; grid-template-columns: 32px 1fr; gap: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
+    .hardware-notes b { color: var(--blue-soft); font: 900 20px/1 var(--display); }
+    .hardware-notes h3 { font-size: clamp(18px,1.4vw,23px); margin-bottom: 6px; }
+    .hardware-notes p { color: #c6d2df; font-size: clamp(14px,1.05vw,17px); line-height: 1.4; margin: 0; }
+    .ride-story-layout { display: grid; grid-template-columns: 1.55fr 1fr; gap: 40px; align-items: center; }
+    .story-intro { color: #d6e0ec; font-size: clamp(19px,1.65vw,27px); line-height: 1.35; margin-bottom: 24px; }
+    .story-sequence article { border-top: 1px solid var(--line); padding-top: 17px; margin-top: 20px; }
+    .story-sequence .tag { color: var(--blue-soft); font: 800 11px/1 var(--display); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 10px; }
+    .story-sequence h3 { color: #fff; font-size: clamp(21px,1.65vw,27px); }
+    .story-sequence article p { color: #c6d2df; font-size: clamp(15px,1.08vw,18px); line-height: 1.45; margin-bottom: 0; }
+    .cms-slide h2 { font-size: clamp(44px,5vw,80px); max-width: 1100px; }
+    .cms-intro { display: grid; grid-template-columns: 1fr 1.05fr; gap: 60px; align-items: center; margin: 34px 0 48px; }
+    .cms-intro .lede { margin: 0; font-size: clamp(22px,2vw,30px); }
+    .cms-brands { display: flex; gap: 25px; align-items: center; justify-content: center; }
+    .brand-option { display: flex; flex-direction: column; align-items: center; gap: 10px; min-width: 170px; }
+    .brand-option img { width: 240px; height: 65px; object-fit: contain; }
+    .brand-option strong { font-size: 18px; color: #402b78; }
+    .brand-option small { font-size: 12px; color: #34465a; }
+    .brand-option .intuiface-logo { width: 240px; height: 65px; object-fit: contain; }
+    .cms-or { font-style: italic; color: #526172; }
+    .cms-features { display: grid; grid-template-columns: repeat(4,1fr); gap: 30px; }
+    .cms-features article { border-top: 3px solid var(--red); padding-top: 18px; }
+    .cms-features article > span { color: #526172; font: 800 12px/1 var(--display); }
+    .cms-features h3 { margin: 16px 0 14px; font-size: clamp(22px,1.8vw,29px); }
+    .cms-features p { color: #34465a; font-size: 17px; line-height: 1.5; margin: 0; }
+    .cms-note { margin: 30px 0 0; font-size: 13px; color: #526172; }
+    .scope-slide h2 { font-size: clamp(44px,5vw,80px); max-width: 1150px; }
+    .scope-slide .roadmap { margin-top: 36px; }
+    .scope-slide .phase { padding: 28px; min-height: 0; }
+    .scope-slide .phase-num { color: #8cc8ff; }
+    .scope-slide .phase h3 { font-size: clamp(24px,2.2vw,35px); }
+    .scope-slide .phase li { font-size: 17px; margin: 13px 0; }
+    .scope-slide .phase .outcome { font-size: 17px; line-height: 1.4; }
+    .closing-slide { background: linear-gradient(135deg,#990f23 0%,#bf2135 58%,#cf2c42 100%); }
+    .closing-slide .eyebrow, .closing-slide .lede, .closing-slide .closing-list span:first-child, .closing-slide .disclaimer { color: #fff; }
+    .closing-slide .eyebrow::before { background: #fff; }
+    .closing-slide .close-grid { gap: 55px; }
+    .closing-slide .close-grid h2 { font-size: clamp(58px,7.2vw,115px); }
+    .closing-slide .closing-list { font-size: 18px; }
+    .closing-slide .closing-list strong { text-align: right; max-width: 265px; }
+    .closing-slide .disclaimer { font-size: 12px; max-width: 1100px; bottom: 54px; }
+    .chrome.on-light .brand, .chrome.on-light .counter { color: var(--navy-950); }
+    .chrome.on-light .brand-mark { border-color: var(--navy-950); }
+    .chrome.on-light .hint { color: #34465a; }
+    @media screen and (max-width: 1100px) and (min-width: 901px) {
+      .hardware-slide, .story-slide, .cms-slide, .scope-slide { padding-left: 4vw; padding-right: 4vw; }
+      .hardware-layout { gap: 24px; grid-template-columns: 1.4fr 1fr; }
+      .hardware-notes { gap: 10px; }
+      .cms-intro { gap: 24px; }
+      .cms-brands { gap: 12px; }
+      .brand-option { min-width: 130px; }
+      .brand-option img { width: 180px; }
+      .cms-features { gap: 20px; }
+    }
+    @media screen and (max-width: 900px) {
+      .hardware-slide, .story-slide, .cms-slide, .scope-slide { padding: 82px 24px 74px; }
+      .hardware-layout, .ride-story-layout, .cms-intro { grid-template-columns: 1fr; gap: 28px; }
+      .cms-features { grid-template-columns: 1fr 1fr; }
+      .cms-brands { flex-wrap: wrap; gap: 16px; }
+      .brand-option img { width: 170px; }
+      .brand-option { min-width: 120px; }
+      .brand-option .intuiface-logo { width: 170px; }
+      .closing-slide .disclaimer { position: static; margin: 38px 0 0; }
+      .closing-slide .close-grid { gap: 28px; }
+      .story-sequence article p, .hardware-notes p { font-size: 16px; }
+    }
+    @media print {
+      @page { size: 1600px 900px; margin: 0; }
+      html, body { width: 1600px; background: var(--navy-950); print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .slide { width: 1600px; height: 900px; min-height: 900px; break-inside: avoid; page-break-after: always; }
+      .slide:last-child { page-break-after: auto; }
+    }
+
+    /* Keep the revised compositions within a presentation viewport. */
+    .hardware-slide h2, .story-slide h2 { max-width: none; font-size: clamp(42px,4.1vw,66px); }
+    .closing-slide { padding-top: 86px; padding-bottom: 75px; }
+    @media screen and (min-width: 901px) and (max-height: 800px) {
+      .hardware-slide, .story-slide, .cms-slide, .scope-slide { padding-top: 68px; padding-bottom: 50px; }
+      .hardware-notes { gap: 11px; }
+      .hardware-notes li { padding-top: 10px; }
+      .scope-slide .phase { padding: 23px; }
+      .closing-slide .close-grid h2 { font-size: clamp(58px,6.8vw,105px); }
+    }
+    @media print {
+      .slide[data-title="The opportunity"] { padding-top: 76px; padding-bottom: 76px; }
+    }
+    /* A casual access screen for static hosting, not server authentication. */
+    body:not(.deck-unlocked) .deck, body:not(.deck-unlocked) .chrome { display: none; }
+    .access-gate { min-height: 100svh; display: grid; place-items: center; padding: 32px 24px; }
+    .access-gate[hidden] { display: none; }
+    .access-form { width: min(420px,100%); }
+    .access-form h1 { font-size: clamp(40px,7vw,56px); line-height: .95; margin-bottom: 24px; }
+    .access-form p { color: #c6d2df; line-height: 1.5; }
+    .access-form label { display: block; margin: 26px 0 9px; font-weight: 600; }
+    .access-form input { width: 100%; padding: 14px 16px; border: 1px solid #64758b; border-radius: 4px; background: #0d213d; color: #fff; font: inherit; }
+    .access-form button { width: 100%; margin-top: 16px; border: 0; border-radius: 4px; padding: 15px 20px; color: #fff; background: #b81328; font-weight: 700; cursor: pointer; }
+    .access-form button:hover { background: #d0243a; }
+    .access-form input:focus-visible, .access-form button:focus-visible { outline: 3px solid var(--blue-soft); outline-offset: 3px; }
+    .access-form .access-error { color: #ffb5bd; min-height: 24px; margin: 12px 0 0; }
+  </style>
+</head>
+<body>
+  <section class="access-gate" id="accessGate" aria-labelledby="accessTitle">
+    <form class="access-form" id="accessForm">
+      <div class="eyebrow">Handcycle experience</div>
+      <h1 id="accessTitle">View the<br/>pitch deck</h1>
+      <p>Enter the password to continue.</p>
+      <label for="deckPassword">Password</label>
+      <input id="deckPassword" name="password" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" required aria-describedby="accessError" />
+      <button type="submit">Open deck</button>
+      <p class="access-error" id="accessError" role="status" aria-live="polite"></p>
+      <noscript><p>Please enable JavaScript to open this deck.</p></noscript>
+    </form>
+  </section>
+  <aside class="chrome" aria-label="Presentation controls">
+    <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+    <div class="brand"><i class="brand-mark" aria-hidden="true"></i><span>Handcycle Experience Concept</span></div>
+    <div class="counter"><span id="currentSlide">01</span> / <span id="totalSlides">09</span></div>
+    <div class="hint">Arrow keys / scroll to navigate</div>
+    <div class="controls">
+      <button class="control" id="prev" aria-label="Previous slide">↑</button>
+      <button class="control" id="next" aria-label="Next slide">↓</button>
+      <button class="control" id="full" aria-label="Enter fullscreen">⛶</button>
+    </div>
+  </aside>
+
+  <main class="deck" id="deck" tabindex="-1">
+    <section class="slide" data-title="Forward">
+      <img class="hero-bg" src="assets/view_01.png" alt="Concept rendering of the green handcycle in front of a curved panoramic display showing a group ride." />
+      <div class="hero-overlay"></div>
+      <div class="hero-copy">
+        <div class="eyebrow">Reimagining the Soldier Ride experience</div>
+        <h1>Move <span>forward.</span></h1>
+        <p class="lede">Transform a bike simulator into a human story about motion, confidence, connection—and the adaptive tools that help make them possible.</p>
+        <div class="hero-meta"><span>Concept pitch deck</span><span>Existing handcycle retained</span><span>Existing footprint respected</span></div>
+      </div>
+    </section>
+
+    <section class="slide slide--light" data-title="The opportunity">
+      <div class="split">
+        <div class="photo-frame"><img src="assets/existing-exhibit.png" alt="Current exhibit with a green handcycle facing three flat displays." /></div>
+        <div>
+          <div class="eyebrow">The opportunity</div>
+          <h2>A simulator today. <span class="accent">A story tomorrow.</span></h2>
+          <div class="stack">
+            <div class="statement"><b>01</b><p>The bike is powerful and authentic, but the current screens read as a media station rather than an environment.</p></div>
+            <div class="statement"><b>02</b><p>The interaction explains <em>what</em> Soldier Ride is. The next version can help visitors feel <em>why it matters</em>.</p></div>
+            <div class="statement"><b>03</b><p>The same compact footprint can support a richer arc: meet a warrior, ride alongside a community, then carry the story forward.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="The big idea">
+      <div class="big-quote">
+        <div class="eyebrow">The big idea</div>
+        <blockquote><span class="quote-mark">“</span>A handcycle is not the story. It is the doorway into a story about reclaiming movement, confidence, and community.<span class="quote-mark">”</span></blockquote>
+        <div class="attribution">Working narrative premise for content development</div>
+      </div>
+    </section>
+
+    <section class="slide hardware-slide" data-title="The hardware upgrade">
+      <div class="revision-wrap">
+        <div class="eyebrow">The hardware upgrade</div>
+        <h2>A new setting for the ride</h2>
+        <div class="hardware-layout">
+          <figure class="hardware-figure"><div style="position:relative">
+            <img src="assets/view_01.png" alt="Proposed handcycle booth with a curved DVLED display, three recessed ceiling speakers and two front-mounted fans." />
+            <span class="hardware-pin" style="left:32%;top:30%" aria-label="1: Curved DVLED display">1</span>
+            <span class="hardware-pin" style="left:90%;top:15%" aria-label="2: Custom booth">2</span>
+            <span class="hardware-pin" style="left:47%;top:8%" aria-label="3: Ceiling speakers">3</span>
+            <span class="hardware-pin" style="left:23%;top:49%" aria-label="4: Booth fans">4</span>
+            <span class="hardware-pin" style="left:52%;top:65%" aria-label="5: Seat sensor location">5</span>
+            </div><figcaption>Concept rendering. Seat sensor concealed in the seat. Player location to be coordinated.</figcaption>
+          </figure>
+          <ol class="hardware-notes">
+            <li><b>01</b><div><h3>One curved canvas</h3><p>A single curved DVLED display replaces the three-screen arrangement.</p></div></li>
+            <li><b>02</b><div><h3>A purpose-built booth</h3><p>A custom structure frames the display and houses the integrated equipment.</p></div></li>
+            <li><b>03</b><div><h3>Sound around the rider</h3><p>Left, center and right speakers recessed into the booth ceiling create an enveloping sound field.</p></div></li>
+            <li><b>04</b><div><h3>A breeze on the road</h3><p>Fans in the booth face provide simulated wind and gentle airflow.</p></div></li>
+            <li><b>05</b><div><h3>A seat that responds</h3><p>A seat sensor starts the welcome and records occupancy for usage metrics.</p></div></li>
+            <li><b>06</b><div><h3>Dedicated playback</h3><p>A BrightSign player runs the experiential content and responds to exhibit inputs.</p></div></li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide" data-title="Visitor journey">
+      <div class="journey">
+        <div class="eyebrow">The visitor experience</div>
+        <h2>From curiosity to connection.</h2>
+        <div class="journey-grid">
+          <article class="journey-step"><h3>Notice</h3><p>Background content rolls while the bike is not in use, inviting visitors to take a seat.</p></article>
+          <article class="journey-step"><h3>Meet</h3><p>Sitting down triggers a 30-second introduction on one side of the screen while the visitor selects a ride.</p></article>
+          <article class="journey-step"><h3>Ride</h3><p>The visitor pedals along with the selected route. Panoramic footage, sound and a simulated breeze bring the ride into the booth.</p></article>
+          <article class="journey-step"><h3>Reflect</h3><p>The road dissolves into the person behind the ride: effort, support, setbacks, and community.</p></article>
+          <article class="journey-step"><h3>Carry</h3><p>A simple next step—learn, share, support, or explore another story—extends the experience beyond the seat.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide story-slide" data-title="The people behind the ride">
+      <div class="revision-wrap">
+        <div class="eyebrow">Ride + story + reflection</div>
+        <h2>The people behind the ride</h2>
+        <div class="ride-story-layout">
+          <figure class="ride-figure">
+            <img src="assets/view_02.png" alt="Visitor using the handcycle with group ride footage and a windowed warrior testimonial on the right side of the curved display." />
+            <figcaption>Concept rendering with a testimonial window alongside the ride.</figcaption>
+          </figure>
+          <div class="story-sequence">
+            <p class="story-intro">Ride alongside a community. Hear what the journey means in a warrior’s own words.</p>
+            <article><div class="tag">Before the ride</div><h3>“What I wanted back”</h3><p>A short introduction connects a personal goal with the adaptive handcycle that helps make it possible.</p></article>
+            <article><div class="tag">Along the way</div><h3>“Who moved with me”</h3><p>Windowed stories play alongside route footage at planned moments, sharing the support and relationships behind the ride.</p></article>
+            <article><div class="tag">Beyond the finish</div><h3>“What became possible”</h3><p>The closing reflection returns to the person: growing confidence, community and life beyond the ride, with an invitation to learn more.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide slide--light cms-slide" data-title="Content your team can manage">
+      <div class="revision-wrap">
+        <div class="eyebrow">The CMS upgrade</div>
+        <h2>A living exhibit, not a frozen install.</h2>
+        <div class="cms-intro">
+          <p class="lede">Intuiface or BSN.cloud puts day-to-day content updates in your team’s hands.</p>
+          <!-- Intuiface logo supplied by the user. BrightSign logo: https://bsn.cloud/assets/images/BrightSignLogo_purple.png
+             CMS references: https://www.intuiface.com/headless-cms ; https://bsn.cloud/ -->
+          <div class="cms-brands" aria-label="CMS options: Intuiface or BSN.cloud">
+            <div class="brand-option"><img class="intuiface-logo" src="assets/intuiface-logo.png" alt="Intuiface" /><small>Interactive experience + CMS</small></div>
+            <span class="cms-or">or</span>
+            <div class="brand-option"><img src="assets/bsn-cloud-platform.png" alt="Official BrightSign cloud platform logo" /><strong>BSN.cloud</strong></div>
+          </div>
+        </div>
+        <div class="cms-features">
+          <article><span>01</span><h3>Update the story</h3><p>Replace background videos, introductions and ride content through a managed content workflow.</p></article>
+          <article><span>02</span><h3>Layer the experience</h3><p>Keep the ride in view while a timeline triggers testimonial windows, captions and other content layers.</p></article>
+          <article><span>03</span><h3>Manage from anywhere</h3><p>Keep offline-first playback at the exhibit. Add remote publishing, player status and support when connected.</p></article>
+          <article><span>04</span><h3>Understand usage</h3><p>Record session counts and time in the seat. Use those metrics to guide future content updates.</p></article>
+        </div>
+        <p class="cms-note">CMS selection, licensing and timeline integration will be confirmed during detailed design.</p>
+      </div>
+    </section>
+
+    <section class="slide scope-slide" data-title="The proposed upgrade">
+      <div class="revision-wrap">
+        <div class="eyebrow">The proposed upgrade</div>
+        <h2>One exhibit. Three connected upgrades.</h2>
+        <div class="roadmap">
+          <article class="phase"><div class="phase-num">The physical setting</div><h3>An immersive<br/>place to ride</h3><ul><li>Single curved DVLED display</li><li>Custom booth with recessed L/C/R speakers and fans</li><li>Seat occupancy sensor</li><li>BrightSign experiential content player</li></ul><div class="outcome">The authentic handcycle stays at the center.</div></article>
+          <article class="phase"><div class="phase-num">The visitor’s journey</div><h3>A ride with<br/>a human story</h3><ul><li>Background content while the bike is idle</li><li>Seat-triggered introduction during ride selection</li><li>Ride footage with timed story windows</li><li>A closing reflection and invitation to learn more</li></ul><div class="outcome">Every ride connects visitors with the people behind Soldier Ride.</div></article>
+          <article class="phase"><div class="phase-num">The content platform</div><h3>A program<br/>your team runs</h3><ul><li>Intuiface or BSN.cloud for user-managed content</li><li>Layered media controlled by a timeline</li><li>Offline-first playback with remote management</li><li>Usage counts and time-in-seat metrics</li></ul><div class="outcome">The exhibit can evolve with new stories and everyday use.</div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide slide--red closing-slide" data-title="The next chapter">
+      <div class="close-grid">
+        <div>
+          <div class="eyebrow">The next chapter</div>
+          <h2>Keep the bike.<br/>Reveal the <span style="color:var(--navy-950)">journey.</span></h2>
+          <p class="lede">Keep the authentic handcycle at the heart of Soldier Ride. Surround it with a more immersive setting, a warrior’s perspective and stories your team can keep growing.</p>
+        </div>
+        <div class="closing-list">
+          <div><span>Keep</span><strong>The authentic handcycle</strong></div>
+          <div><span>Immerse</span><strong>A continuous view, sound and breeze</strong></div>
+          <div><span>Connect</span><strong>The ride to a warrior’s story</strong></div>
+          <div><span>Sustain</span><strong>Fresh content and insight into use</strong></div>
+        </div>
+      </div>
+      <p class="disclaimer">Concept imagery is illustrative. Final exhibit design and content will be developed with Wounded Warrior Project and participating warriors.</p>
+    </section>
+  </main>
+
+  <script>
+    // This client-side check is only a deterrent to casual viewing on static hosting.
+    const accessGate = document.getElementById('accessGate');
+    const accessForm = document.getElementById('accessForm');
+    const passwordInput = document.getElementById('deckPassword');
+    const accessError = document.getElementById('accessError');
+    const accessKey = `wwp-deck-access:${location.pathname}`;
+    let unlocked = false;
+
+    function unlockDeck() {
+      unlocked = true;
+      accessGate.hidden = true;
+      document.body.classList.add('deck-unlocked');
+      passwordInput.value = '';
+      try { sessionStorage.setItem(accessKey, 'unlocked'); } catch (_) {}
+      update();
+      deck.focus({ preventScroll: true });
+    }
+
+    accessForm.addEventListener('submit', event => {
+      event.preventDefault();
+      if (passwordInput.value === 'wwp2026') {
+        accessError.textContent = '';
+        passwordInput.removeAttribute('aria-invalid');
+        unlockDeck();
+      } else {
+        accessError.textContent = 'Incorrect password. Please try again.';
+        passwordInput.setAttribute('aria-invalid', 'true');
+        passwordInput.focus();
+        passwordInput.select();
+      }
+    });
+    passwordInput.addEventListener('input', () => {
+      accessError.textContent = '';
+      passwordInput.removeAttribute('aria-invalid');
+    });
+
+    const deck = document.getElementById('deck');
+    const slides = [...document.querySelectorAll('.slide')];
+    const currentEl = document.getElementById('currentSlide');
+    const totalEl = document.getElementById('totalSlides');
+    const bar = document.getElementById('progressBar');
+    let current = 0;
+
+    totalEl.textContent = String(slides.length).padStart(2, '0');
+
+    function go(index) {
+      current = Math.max(0, Math.min(index, slides.length - 1));
+      slides[current].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      update();
+    }
+
+    function update() {
+      if (!unlocked) { document.title = 'Pitch deck access - Forward'; return; }
+      currentEl.textContent = String(current + 1).padStart(2, '0');
+      bar.style.width = `${((current + 1) / slides.length) * 100}%`;
+      document.querySelector('.chrome').classList.toggle('on-light', slides[current].classList.contains('slide--light'));
+      document.title = `${slides[current].dataset.title} — Forward`;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(e => e.isIntersecting).sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!visible) return;
+      current = slides.indexOf(visible.target);
+      update();
+    }, { root: deck, threshold: [.55, .75] });
+    slides.forEach(s => observer.observe(s));
+
+    document.getElementById('prev').addEventListener('click', () => go(current - 1));
+    document.getElementById('next').addEventListener('click', () => go(current + 1));
+    document.getElementById('full').addEventListener('click', async () => {
+      if (!document.fullscreenElement) await document.documentElement.requestFullscreen?.();
+      else await document.exitFullscreen?.();
+    });
+
+    window.addEventListener('keydown', e => {
+      if (!unlocked) return;
+      if (['ArrowDown','ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); go(current + 1); }
+      if (['ArrowUp','ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); go(current - 1); }
+      if (e.key === 'Home') { e.preventDefault(); go(0); }
+      if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+    });
+
+    try { if (sessionStorage.getItem(accessKey) === 'unlocked') unlockDeck(); } catch (_) {}
+    update();
+  </script>
+</body>
+</html>
